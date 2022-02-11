@@ -36,6 +36,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   List<GlobalKey> itemKeys = [];
   GlobalKey centerKey = GlobalKey();
 
+  Size size;
+
   @override
   void initState() {
     super.initState();
@@ -57,14 +59,15 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           GridView.count(
             shrinkWrap: false,
             crossAxisCount: 3,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 12.0,
+            crossAxisSpacing: 0.0,
+            mainAxisSpacing: 0.0,
             children: List.generate(9, (index) {
               return Visibility(
                 visible: !selectedList.contains(index),
                 child: InkWell(
                   onTap: () {
                     setState(() {
+                      highlightControllerList[index].reset();
                       selectedList.clear();
                       selectedList.add(index);
                     });
@@ -78,7 +81,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       print('------------------------------------------------------');
 
                       startCoinItem(index, targetPoint, itemPoint);
-
                     });
                   },
                   child: Container(
@@ -96,8 +98,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ? GridView.count(
                   shrinkWrap: false,
                   crossAxisCount: 3,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 12.0,
+                  crossAxisSpacing: 0.0,
+                  mainAxisSpacing: 0.0,
                   children: List.generate(9, (index) {
                     return Visibility(
                       visible: selectedList.contains(index),
@@ -131,38 +133,36 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   }),
                 )
               : Container(),
-
-          Center(
-            child: CircleAvatar(
-              backgroundColor: Colors.pink,
-              child: Container(
-                color: Colors.pink.withOpacity(0.5),
-                width: 20,
-                height: 20,
-              ),
-            ),
-          )
         ]),
       ),
-      TextButton(key: centerKey, onPressed: () {
-        setState(() {
-          selectedList.clear();
-        });
-      }, child: Text('Test Click'))
+      InkWell(
+        key: centerKey,
+        onTap: () {
+          setState(() {
+            selectedList.clear();
+          });
+        },
+        child: Container(
+          alignment: Alignment.center,
+          color: Colors.brown,
+          width: 100,
+          height: 100,
+          child: Text('Test Click'),
+        ),
+      ),
+      Container(
+        height: 200,
+        color: Colors.amberAccent.withOpacity(0.1),
+      )
     ]));
   }
 
   void startCoinItem(int index, Point tartgetPoint, Point itemPoint) {
-    highlightControllerList[index].reset();
-
-    Tween tweenTransX = Tween(begin: 0.0, end:  tartgetPoint.x - itemPoint.x);
-    // tweenTransList.add(tweenTransX);
-    double value = tartgetPoint.y - itemPoint.y - 100.0;
-    print('Value Anim ===     ${value}       tartgetPoint.y =    ${tartgetPoint.y}');
-    Tween tweenTransY = Tween(begin: 0.0, end:  value);
-    // tweenTransList.add(tweenTransY);
-    Tween tweenScale = Tween(begin: 1.0, end: 1.0);
-    // tweenScaleList.add(tweenScale);
+    Tween tweenTransX = Tween(begin: 0.0, end: tartgetPoint.x - itemPoint.x - 25 / 2);
+    double value = tartgetPoint.y - itemPoint.y - size.height - 25;
+    print('Value Anim ===     ${value}       size.height =    ${size.height}');
+    Tween tweenTransY = Tween(begin: 0.0, end: 100.0);
+    Tween tweenScale = Tween(begin: 1.0, end: 2.0);
 
     highlightAnimationList[index] = SequenceAnimationBuilder()
         .addAnimatable(
@@ -186,7 +186,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   Point getPosWidget(GlobalKey key) {
     RenderBox box = key.currentContext.findRenderObject() as RenderBox;
-    Offset position = box.localToGlobal(Offset.zero); //this is global position
+    Offset position = box.localToGlobal(Offset.zero); //this is
+    size = box.size; // global position
     double x = position.dx;
     double y = position.dy;
 
