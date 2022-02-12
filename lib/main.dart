@@ -135,20 +135,40 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               : Container(),
         ]),
       ),
-      InkWell(
-        key: centerKey,
-        onTap: () {
-          setState(() {
-            selectedList.clear();
-          });
-        },
-        child: Container(
-          alignment: Alignment.center,
-          color: Colors.brown,
-          width: 100,
-          height: 100,
-          child: Text('Test Click'),
-        ),
+      Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          InkWell(
+            key: centerKey,
+            onTap: () {
+              setState(() {
+                selectedList.clear();
+              });
+            },
+            child: Container(
+              alignment: Alignment.center,
+              color: Colors.brown,
+              width: 100,
+              height: 100,
+              child: Text('Test Click'),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              setState(() {
+                highlightControllerList[selectedList.first].reverse();
+              });
+            },
+            child: Container(
+              alignment: Alignment.center,
+              color: Colors.brown,
+              width: 100,
+              height: 100,
+              child: Text('Reverse'),
+            ),
+          ),
+        ],
       ),
       Container(
         height: 200,
@@ -158,11 +178,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   void startCoinItem(int index, Point tartgetPoint, Point itemPoint) {
-    Tween tweenTransX = Tween(begin: 0.0, end: tartgetPoint.x - itemPoint.x - 25 / 2);
+    Tween tweenTransX = Tween(begin: 0.0, end: tartgetPoint.x - itemPoint.x - 18);
     double value = tartgetPoint.y - itemPoint.y - size.height - 25;
     print('Value Anim ===     ${value}       size.height =    ${size.height}');
-    Tween tweenTransY = Tween(begin: 0.0, end: 100.0);
-    Tween tweenScale = Tween(begin: 1.0, end: 2.0);
+    Tween tweenTransY = Tween(begin: 0.0, end: value);
+    Tween tweenScale = Tween(begin: 1.0, end: 1.0);
 
     highlightAnimationList[index] = SequenceAnimationBuilder()
         .addAnimatable(
