@@ -55,140 +55,134 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     double height = MediaQuery.of(context).size.height;
     var padding = MediaQuery.of(context).viewPadding;
     // double widthItem = (MediaQuery.of(context).size.width - 32 - 32) / 3 - 16;
     double space = (height - padding.top - padding.bottom - 300 - 150 - 32);
-    print('Height ==   ${height}    pad top == ${padding.top}     pad bottom ==   ${padding.bottom}     real heoght ==   ${space}');
+    print(
+        'Height ==   ${height}    pad top == ${padding.top}     pad bottom ==   ${padding.bottom}     real heoght ==   ${space}');
 
     return Scaffold(
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  height: 100,
-                  color: Colors.black26,
-                ),
-              ),
-            ),
-            Positioned.fill(
-              bottom: 0,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 100,
-                  color: Colors.amberAccent.withOpacity(0.1),
-                ),
-              ),
-            ),
-            Positioned.fill(
-              child: Container(
-                padding: EdgeInsets.only(top: space/4 - 25 + 100),
-                color: Colors.pink.withOpacity(0.4),
-                child: Stack(children: [
-                  //real list
-                  AnimationLimiter(
-                    child: GridView.count(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: false,
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 16.0,
-                      mainAxisSpacing: 16.0,
-                      children: List.generate(9, (index) {
-                        return Visibility(
-                          visible: !selectedList.contains(index),
-                          child: AnimationConfiguration.staggeredGrid(
-                            position: index,
-                            duration: const Duration(milliseconds: 800),
-                            columnCount: 3,
-                            child: SlideAnimation(
-                              verticalOffset: -100.0,
-                              child: FadeInAnimation(
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      highlightControllerList[index].reset();
-                                      selectedList.clear();
-                                      selectedList.add(index);
+        body: Stack(children: [
+      Positioned.fill(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            height: 100,
+            color: Colors.black26,
+          ),
+        ),
+      ),
+      Positioned.fill(
+        bottom: 0,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: 100,
+            color: Colors.amberAccent.withOpacity(0.1),
+          ),
+        ),
+      ),
+      Positioned.fill(
+        child: Container(
+          padding: EdgeInsets.only(top: space / 4 - 25 + 100),
+          color: Colors.pink.withOpacity(0.4),
+          child: Stack(children: [
+            //real list
+            AnimationLimiter(
+              child: GridView.count(
+                padding: EdgeInsets.zero,
+                shrinkWrap: false,
+                crossAxisCount: 3,
+                crossAxisSpacing: 16.0,
+                mainAxisSpacing: 16.0,
+                children: List.generate(9, (index) {
+                  return Visibility(
+                    visible: !selectedList.contains(index),
+                    child: AnimationConfiguration.staggeredGrid(
+                      position: index,
+                      duration: const Duration(milliseconds: 800),
+                      columnCount: 3,
+                      child: SlideAnimation(
+                        verticalOffset: -100.0,
+                        child: FadeInAnimation(
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                highlightControllerList[index].reset();
+                                selectedList.clear();
+                                selectedList.add(index);
 
-                                      _controllerList[index].reset();
-                                      // _controllerList[index].forward();
-                                      _controllerList[index].value = 0.0;
-                                      _controllerList[index].repeat(
-                                        min: 0.0,
-                                        max: 0.1,
-                                        reverse: false,
-                                        period: _controllerList[index].duration * (0.1 - 0.0),
-                                      );
+                                _controllerList[index].reset();
+                                // _controllerList[index].forward();
+                                _controllerList[index].value = 0.0;
+                                _controllerList[index].repeat(
+                                  min: 0.0,
+                                  max: 0.1,
+                                  reverse: false,
+                                  period: _controllerList[index].duration * (0.1 - 0.0),
+                                );
 
-                                      highlightControllerList[index].addStatusListener((status) {
-                                        if((status == AnimationStatus.reverse)){
-                                          print('Animation reverse...............');
+                                highlightControllerList[index].addStatusListener((status) {
+                                  if ((status == AnimationStatus.reverse)) {
+                                    print('Animation reverse...............');
 
-                                          _controllerList[index].stop();
+                                    _controllerList[index].stop();
 
-                                          for(int i = 0; i < _controllerList.length; i++){
-                                            if(i == index){
-                                              continue;
-                                            }
-                                            _controllerList[i].reset();
-                                            _controllerList[i].forward();
-
-                                          }
-
-
+                                    for (int i = 0; i < _controllerList.length; i++) {
+                                      if (i == index) {
+                                        continue;
+                                      }
+                                      _controllerList[i].reset();
+                                      _controllerList[i].forward();
+                                    }
                                   }
+                                });
+                              });
 
-                                      });
+                              Future.delayed(Duration(milliseconds: 300), () {
+                                Point itemPoint = getPosWidget(itemKeys[index]);
+                                Point targetPoint = getPosWidget(centerKey);
 
-                                    });
+                                print('itemPoint ==     ${itemPoint.x}    x    ${itemPoint.y}');
+                                print('targetPoint ==     ${targetPoint.x}    x    ${targetPoint.y}');
+                                print('------------------------------------------------------');
 
-                                    Future.delayed(Duration(milliseconds: 300), () {
-                                      Point itemPoint = getPosWidget(itemKeys[index]);
-                                      Point targetPoint = getPosWidget(centerKey);
-
-                                      print('itemPoint ==     ${itemPoint.x}    x    ${itemPoint.y}');
-                                      print('targetPoint ==     ${targetPoint.x}    x    ${targetPoint.y}');
-                                      print('------------------------------------------------------');
-
-                                      startCoinItem(index, targetPoint, itemPoint);
-
-                                    });
-                                  },
-                                  child: Container(
-                                    width: 50,
-                                    height: 50,
-                                    color: index % 2 == 0 ? Colors.red : Colors.green,
-                                    child: Lottie.asset(
-                                      'assets/open_chest.json',
-                                      controller: _controllerList[index],
-                                      animate: false,
-                                      onLoaded: (composition) {
-                                        // Configure the AnimationController with the duration of the
-                                        // Lottie file and start the animation.
-                                      },
-                                    ),
-                                  ),
-                                ),
+                                startCoinItem(index, targetPoint, itemPoint);
+                              });
+                            },
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              color: index % 2 == 0 ? Colors.red : Colors.green,
+                              child: Lottie.asset(
+                                'assets/open_chest.json',
+                                controller: _controllerList[index],
+                                animate: false,
+                                onLoaded: (composition) {
+                                  // Configure the AnimationController with the duration of the
+                                  // Lottie file and start the animation.
+                                },
                               ),
                             ),
                           ),
-                        );
-                      }),
+                        ),
+                      ),
                     ),
-                  ),
+                  );
+                }),
+              ),
+            ),
 
-                  selectedList.isNotEmpty ?
-                  Container(
+            selectedList.isNotEmpty
+                ? Container(
                     color: Colors.black.withOpacity(0.3),
-                  ) : Container(),
+                  )
+                : Container(),
 
-                  //fake list
-                  selectedList.isNotEmpty
-                      ? GridView.count(
+            //fake list
+            selectedList.isNotEmpty
+                ? GridView.count(
                     padding: EdgeInsets.zero,
                     shrinkWrap: false,
                     crossAxisCount: 3,
@@ -200,8 +194,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         child: InkWell(
                           key: itemKeys[index],
                           onTap: () {
-                            setState(() {
-                            });
+                            setState(() {});
                           },
                           child: AnimatedBuilder(
                             animation: highlightControllerList[index],
@@ -233,63 +226,67 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       );
                     }),
                   )
-                      : Container(),
-                ]),
-              ),
-            ),
-            Positioned.fill(
-              bottom: 100,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      key: centerKey,
-                      onTap: () {
-                        setState(() {
-                          selectedList.clear();
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        color: Colors.brown,
-                        width: 100,
-                        height: 100,
-                        child: Text('Test Click'),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          highlightControllerList[selectedList.first].reverse();
-                        });
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        color: Colors.brown,
-                        width: 100,
-                        height: 100,
-                        child: Text('Reverse'),
-                      ),
-                    ),
-                  ],
+                : Container(),
+          ]),
+        ),
+      ),
+      Positioned.fill(
+        bottom: 100,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                // key: centerKey,
+                onTap: () {
+                  setState(() {
+                    selectedList.clear();
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Colors.brown,
+                  width: 100,
+                  height: 100,
+                  child: Text('Test Click'),
                 ),
               ),
-            ),
-
-
-          ]
-        ));
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    highlightControllerList[selectedList.first].reverse();
+                  });
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  color: Colors.brown,
+                  width: 100,
+                  height: 100,
+                  child: Text('Reverse'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      Center(
+        child: SizedBox(
+          key: centerKey,
+          width: 50,
+          height: 50,
+        ),
+      )
+    ]));
   }
 
   void startCoinItem(int index, Point tartgetPoint, Point itemPoint) {
-    Tween tweenTransX = Tween(begin: 0.0, end: tartgetPoint.x - itemPoint.x - 18);
-    double value = tartgetPoint.y - itemPoint.y - size.height - 25;
+    Tween tweenTransX = Tween(begin: 0.0, end: (tartgetPoint.x - itemPoint.x - 36) / 2);
+    double value = (tartgetPoint.y - itemPoint.y - size.height - 25) / 2;
     print('Value Anim ===     ${value}       size.height =    ${size.height}');
     Tween tweenTransY = Tween(begin: 0.0, end: value);
-    Tween tweenScale = Tween(begin: 1.0, end: 1.0);
+    Tween tweenScale = Tween(begin: 1.0, end: 2.0);
 
     highlightAnimationList[index] = SequenceAnimationBuilder()
         .addAnimatable(
@@ -304,7 +301,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             tag: "transY",
             curve: Curves.easeInBack)
         .addAnimatable(
-            animatable: tweenScale, from: Duration(milliseconds: 0), to: Duration(milliseconds: 550), tag: 'scale')
+            animatable: tweenScale, from: Duration(milliseconds: 0), to: Duration(milliseconds: 550), tag: "scale",  curve: Curves.easeInBack)
         .animate(highlightControllerList[index]);
 
     highlightControllerList[index].forward();
@@ -348,7 +345,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               tag: "transY",
               curve: Curves.easeIn)
           .addAnimatable(
-              animatable: tweenScale, from: Duration(milliseconds: 0), to: Duration(milliseconds: 550), tag: 'scale')
+              animatable: tweenScale, from: Duration(milliseconds: 0), to: Duration(milliseconds: 550), tag: "scale")
           .animate(highlightController);
 
       highlightControllerList.add(highlightController);
