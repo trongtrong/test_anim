@@ -120,9 +120,29 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                       _controllerList[index].repeat(
                                         min: 0.0,
                                         max: 0.1,
-                                        reverse: true,
+                                        reverse: false,
                                         period: _controllerList[index].duration * (0.1 - 0.0),
                                       );
+
+                                      highlightControllerList[index].addStatusListener((status) {
+                                        if((status == AnimationStatus.reverse)){
+                                          print('Animation reverse...............');
+
+                                          _controllerList[index].stop();
+
+                                          for(int i = 0; i < _controllerList.length; i++){
+                                            if(i == index){
+                                              continue;
+                                            }
+                                            _controllerList[i].reset();
+                                            _controllerList[i].forward();
+
+                                          }
+
+
+                                  }
+
+                                      });
 
                                     });
 
@@ -144,6 +164,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                     color: index % 2 == 0 ? Colors.red : Colors.green,
                                     child: Lottie.asset(
                                       'assets/open_chest.json',
+                                      controller: _controllerList[index],
                                       animate: false,
                                       onLoaded: (composition) {
                                         // Configure the AnimationController with the duration of the
