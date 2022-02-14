@@ -111,18 +111,22 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   onTap: () {
                                     setState(() {
                                       highlightControllerList[index].reset();
-                                      // _controllerList[index].reset();
                                       selectedList.clear();
                                       selectedList.add(index);
 
-                                      _controllerList[index].forward();
-
+                                      _controllerList[index].reset();
+                                      // _controllerList[index].forward();
+                                      _controllerList[index].value = 0.0;
+                                      _controllerList[index].repeat(
+                                        min: 0.0,
+                                        max: 0.1,
+                                        reverse: true,
+                                        period: _controllerList[index].duration * (0.1 - 0.0),
+                                      );
 
                                     });
 
                                     Future.delayed(Duration(milliseconds: 300), () {
-                                      // _controllerList[index].forward();
-
                                       Point itemPoint = getPosWidget(itemKeys[index]);
                                       Point targetPoint = getPosWidget(centerKey);
 
@@ -176,8 +180,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           key: itemKeys[index],
                           onTap: () {
                             setState(() {
-                              // selectedList.clear();
-                              // selectedList.add(index);
                             });
                           },
                           child: AnimatedBuilder(
