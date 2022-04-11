@@ -14,6 +14,7 @@ dependencies:
   flutter_sequence_animation: "^4.0.0-nullsafety"
   flutter_staggered_animations: "^1.0.0"
   lottie: ^1.2.1
+  flutter_vertical_marquee: ^0.2.3
 
 
 dev_dependencies:
