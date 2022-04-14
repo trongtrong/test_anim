@@ -83,20 +83,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_fortune_wheel:
-    dependency: "direct main"
-    description:
-      name: flutter_fortune_wheel
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
   flutter_hooks:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_hooks
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.2+1"
+    version: "0.18.3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -123,13 +116,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_vertical_marquee:
-    dependency: "direct main"
-    description:
-      name: flutter_vertical_marquee
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.3"
   lints:
     dependency: transitive
     description:
@@ -173,7 +159,7 @@ packages:
     source: hosted
     version: "1.8.0"
   quiver:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: quiver
       url: "https://pub.dartlang.org"
