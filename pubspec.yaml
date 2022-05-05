@@ -15,6 +15,10 @@ dependencies:
   flutter_staggered_animations: "^1.0.0"
   lottie: ^1.2.1
 #  flutter_vertical_marquee: ^0.2.3
+  percent_indicator:
+    git:
+      url: https://github.com/diegoveloper/flutter_percent_indicator.git
+
 
   flutter_hooks: ^0.18.1
   quiver: ^3.0.1+1

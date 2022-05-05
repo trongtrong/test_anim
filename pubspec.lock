@@ -158,6 +158,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  percent_indicator:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "686feb842d7144c3c45f8ce8d305a380416f3b67"
+      url: "https://github.com/diegoveloper/flutter_percent_indicator.git"
+    source: git
+    version: "4.0.1"
   quiver:
     dependency: "direct main"
     description:

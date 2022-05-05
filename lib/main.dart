@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:lottie/lottie.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:test_project/open_chest_screen.dart';
 import 'package:test_project/src/core/core.dart';
 import 'package:test_project/src/wheel/wheel.dart';
 import 'package:test_project/undoRedo/lib/src/simple_stack.dart';
 import 'package:test_project/undoRedo/undo_redo_screen.dart';
+import 'package:test_project/widdget/gauge_widget.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -23,15 +25,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Animaition'),
       ),
-      body: UndoRedoScreen(),
+      body: Center(
+        child:  CircularPercentIndicator(
+          radius: 120.0,
+          animation: true,
+          animationDuration: 500,
+          lineWidth: 10.0,
+          percent: 0.5,
+          reverse: false,
+          arcBackgroundColor: Colors.blue,
+          arcType: ArcType.FULL,
+          center: Text(
+            "20 hours",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14.0),
+          ),
+          circularStrokeCap: CircularStrokeCap.round,
+          backgroundColor: Colors.transparent,
+          progressColor: Colors.cyan,
+        ),
 
-        /*Container(
+
+
+        /*CustomPaint(
+          size: Size(100.0, 100.0),
+          painter: GaugePainter(),
+        ),*/
+      ),
+
+      /*Container(
           alignment: Alignment.center,
           width: 200,
           height: 200,
