@@ -12,6 +12,7 @@ import 'package:test_project/src/wheel/wheel.dart';
 import 'package:test_project/undoRedo/lib/src/simple_stack.dart';
 import 'package:test_project/undoRedo/undo_redo_screen.dart';
 import 'package:test_project/widdget/gauge_widget.dart';
+import 'package:test_project/widdget/slider_painter.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -25,13 +26,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Animaition'),
       ),
       body: Center(
-        child:  CircularPercentIndicator(
+        child: CustomPaint(
+          size: Size(width, 100.0),
+          painter: SliderPainter(
+            max: 100,
+            min: 0,
+            progress: 20
+          ),
+        ) ,
+
+
+        /*CircularPercentIndicator(
           radius: 120.0,
           animation: true,
           animationDuration: 500,
@@ -47,7 +59,7 @@ class MyApp extends StatelessWidget {
           circularStrokeCap: CircularStrokeCap.round,
           backgroundColor: Colors.transparent,
           progressColor: Colors.cyan,
-        ),
+        ),*/
 
 
 
